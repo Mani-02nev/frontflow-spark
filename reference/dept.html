@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+     <meta charset="UTF-8" />
+     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+     <title>SIT - Departments</title>
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet" />
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+     <style>
+          :root {
+               --primary-blue: #243c7e;
+               --secondary-blue: #2563EB;
+               --accent-yellow: #FACC15;
+               --bg-light: #f4f7f9;
+               --text-dark: #333;
+               --glow-color: rgba(37, 99, 235, 0.5);
+          }
+
+          body {
+               background: linear-gradient(to right, #e3f2fd, #bbdefb);
+               font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+               overflow-x: hidden;
+          }
+
+          #preloader {
+               position: fixed;
+               top: 0;
+               left: 0;
+               width: 100%;
+               height: 100%;
+               background: var(--primary-blue);
+               z-index: 9999;
+               display: flex;
+               justify-content: center;
+               align-items: center;
+               transition: opacity 0.75s ease;
+          }
+
+          .spinner {
+               width: 50px;
+               height: 50px;
+               border: 5px solid rgba(255, 255, 255, 0.3);
+               border-top-color: var(--accent-yellow);
+               border-radius: 50%;
+               animation: spin 1s linear infinite;
+          }
+
+          @keyframes spin {
+               to {
+                    transform: rotate(360deg);
+               }
+          }
+
+          .header {
+               background: linear-gradient(90deg, var(--primary-blue), var(--secondary-blue));
+               color: #fff;
+               padding: 15px 20px;
+               display: flex;
+               align-items: center;
+               justify-content: space-between;
+               position: relative;
+               z-index: 10;
+               overflow: hidden;
+          }
+
+          #particles-js {
+               position: absolute;
+               width: 100%;
+               height: 100%;
+               top: 0;
+               left: 0;
+               z-index: 1;
+          }
+
+          .header-content {
+               display: flex;
+               align-items: center;
+               justify-content: space-between;
+               width: 100%;
+               position: relative;
+               z-index: 2;
+          }
+
+          .header-title {
+               font-size: 22px;
+               font-weight: 600;
+               text-align: center;
+               flex: 1;
+               text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+          }
+
+          .img-logo {
+               width: 50px;
+               height: 50px;
+               border-radius: 10px;
+               box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+               transition: transform 0.3s ease;
+          }
+
+          .img-logo:hover {
+               transform: scale(1.1);
+          }
+
+          .navbar {
+               background: rgba(255, 255, 255, 0.8);
+               backdrop-filter: blur(10px);
+               box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+               position: sticky;
+               top: 0;
+               z-index: 1020;
+          }
+
+          .navbar-brand {
+               font-size: 1.5rem;
+               font-weight: bold;
+               color: var(--primary-blue) !important;
+          }
+
+          .navbar-nav .nav-link {
+               color: var(--text-dark) !important;
+               font-weight: 500;
+               transition: all 0.3s ease;
+               border-radius: 8px;
+               padding: 8px 12px;
+          }
+
+          .navbar-nav .nav-link:hover,
+          .navbar-nav .nav-link.active {
+               color: #ffffff !important;
+               transform: translateY(-3px);
+               background: #1e40af;
+               border-radius: 12px;
+          }
+
+          .dropdown-menu {
+               border-radius: 12px;
+               border: none;
+               box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+          }
+
+          .dropdown-item:hover {
+               background-color: var(--secondary-blue);
+               color: white !important;
+          }
+
+          .department-content-wrapper {
+               display: none;
+          }
+
+          .department-content-wrapper.active {
+               display: block;
+          }
+
+          .left-sidebar {
+               width: 300px;
+               padding: 20px;
+               position: sticky;
+               top: 70px;
+               height: calc(100vh - 80px);
+               background: rgba(255, 255, 255, 0.9);
+               border-right: 1px solid #ddd;
+               overflow-y: auto;
+               display: block;
+               flex-shrink: 0;
+          }
+
+          .left-sidebar .nav-header {
+               font-weight: 700;
+               color: var(--primary-blue);
+               padding-bottom: 10px;
+               margin-bottom: 15px;
+               border-bottom: 2px solid var(--secondary-blue);
+          }
+
+          .left-sidebar .nav-link {
+               font-weight: 500;
+               color: #333;
+               padding: 12px 15px;
+               border-radius: 8px;
+               transition: all 0.3s ease;
+               cursor: pointer;
+          }
+
+          .left-sidebar .nav-link:hover,
+          .left-sidebar .nav-link.active {
+               background-color: rgba(37, 99, 235, 0.1);
+               color: var(--primary-blue);
+               transform: translateX(5px);
+          }
+
+          .content-section {
+               padding: 40px;
+               background-color: #fff;
+               margin-bottom: 20px;
+               border-radius: 12px;
+               box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+               display: none;
+               animation: fadeInBottom 0.6s ease-out forwards;
+          }
+
+          @keyframes fadeInBottom {
+               from {
+                    opacity: 0;
+                    transform: translateY(30px);
+               }
+
+               to {
+                    opacity: 1;
+                    transform: translateY(0);
+               }
+          }
+
+          .content-section.show {
+               display: block;
+          }
+
+          .faculty-card {
+               flex: 1 1 30%;
+               background: #fff;
+               border-radius: 12px;
+               box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+               text-align: center;
+               padding: 20px;
+               transition: transform 0.3s ease;
+               position: relative;
+          }
+
+          .faculty-card:hover {
+               transform: translateY(-10px) scale(1.02);
+               box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+          }
+
+          .faculty-card img {
+               width: 120px;
+               height: 120px;
+               border-radius: 50%;
+               object-fit: cover;
+               margin-bottom: 1rem;
+               border: 3px solid var(--primary-blue);
+          }
+
+          .main-container {
+               display: flex;
+               min-height: calc(100vh - 70px);
+          }
+
+          .main-content {
+               flex-grow: 1;
+               padding: 20px 40px;
+          }
+
+          h2 {
+               color: var(--primary-blue);
+               border-bottom: 2px solid var(--secondary-blue);
+               padding-bottom: 10px;
+               margin-bottom: 20px;
+          }
+
+          h3 {
+               font-size: 1.25rem;
+               font-weight: 600;
+               color: var(--text-dark);
+          }
+
+          .hod-card {
+               display: flex;
+               flex-direction: row;
+               gap: 25px;
+               background: #fff;
+               border-radius: 12px;
+               box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+               padding: 25px;
+               margin-bottom: 30px;
+          }
+
+          .hod-card img {
+               width: 220px;
+               height: auto;
+               border-radius: 12px;
+               object-fit: cover;
+          }
+
+          .hod-card-content {
+               flex: 1;
+          }
+
+          .faculty-card-grid {
+               display: flex;
+               flex-wrap: wrap;
+               gap: 20px;
+          }
+
+          .download-btn {
+               display: inline-block;
+               padding: 10px 20px;
+               background-color: var(--secondary-blue);
+               color: white !important;
+               border-radius: 5px;
+               text-decoration: none;
+               transition: background-color 0.3s;
+          }
+
+          .download-btn:hover {
+               background-color: var(--primary-blue);
+          }
+
+          table {
+               width: 100%;
+               border-collapse: collapse;
+               margin-top: 20px;
+               box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+          }
+
+          th,
+          td {
+               padding: 12px 15px;
+               border: 1px solid #ddd;
+               text-align: left;
+          }
+
+          th {
+               background-color: var(--primary-blue);
+               color: white;
+          }
+
+          tbody tr:nth-child(even) {
+               background-color: #f2f2f2;
+          }
+
+          .gallery {
+               display: grid;
+               grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+               gap: 20px;
+          }
+
+          .gallery img {
+               width: 100%;
+               height: 200px;
+               object-fit: cover;
+               border-radius: 10px;
+               box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+          }
+
+          .footer {
+               background-color: var(--primary-blue);
+               color: #fff;
+               text-align: center;
+               padding: 20px;
+               margin-top: 40px;
+          }
+
+          /* --- DEPARTMENT BANNER STYLES --- */
+          .department-banner {
+               width: 100%;
+               height: 200px;
+               background-size: cover;
+               background-position: center;
+               border-radius: 12px;
+               margin-bottom: 30px;
+               box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+               position: relative;
+               display: flex;
+               align-items: center;
+               justify-content: center;
+               color: white;
+               font-size: 2.2rem;
+               font-weight: bold;
+               text-align: center;
+               text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+          }
+
+          /* Specific banner images */
+          #cse-banner {
+               background-image: url('img/csc/baner.png');
+          }
+
+          #mech-banner {
+               /* background-image: ; */
+          }
+
+          #eee-banner {
+               background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('https://i.ibb.co/xJSRY8g/eee-banner.jpg');
+          }
+
+          #civil-banner {
+               background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('https://i.ibb.co/mX7YtB2/civil-banner.jpg');
+          }
+
+          #ice-banner {
+               background-image: url('img/csc/Gemini_Generated_Image_q8xw6pq8xw6pq8xw - Edited.png');
+          }
+
+          #paper-banner {
+               background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('https://i.ibb.co/G0d0b6m/paper-banner.jpg');
+          }
+
+
+          /* --- MOBILE RESPONSIVE STYLES --- */
+          @media (max-width: 768px) {
+               .header-title {
+                    font-size: 1rem;
+               }
+
+               .img-logo {
+                    width: 40px;
+                    height: 40px;
+               }
+
+               .main-container {
+                    flex-direction: column;
+               }
+
+               .left-sidebar {
+                    position: static;
+                    width: 100%;
+                    height: auto;
+                    border-right: none;
+                    border-bottom: 2px solid #ddd;
+                    margin-bottom: 20px;
+                    padding: 15px;
+                    overflow-y: hidden;
+               }
+
+               .main-content {
+                    padding: 15px;
+               }
+
+               .content-section {
+                    padding: 20px;
+               }
+
+               .hod-card {
+                    flex-direction: column;
+                    align-items: center;
+                    text-align: center;
+               }
+
+               .hod-card img {
+                    width: 150px;
+                    height: 150px;
+                    object-fit: cover;
+               }
+
+               .table-responsive-wrapper {
+                    overflow-x: auto;
+                    -webkit-overflow-scrolling: touch;
+               }
+
+               .navbar-brand {
+                    font-size: 1.2rem;
+               }
+
+               /* Adjust button groups on mobile */
+               section .d-flex.flex-wrap.gap-3 {
+                    flex-direction: column;
+                    gap: 0 !important;
+               }
+
+               .download-btn {
+                    width: 100%;
+                    text-align: center;
+                    margin-bottom: 10px;
+               }
+
+               .download-btn:last-child {
+                    margin-bottom: 0;
+               }
+
+               .department-banner {
+                    height: 150px;
+                    font-size: 1.5rem;
+               }
+          }
+     </style>
+</head>
+
+<body>
+     <div id="preloader">
+          <div class="spinner"></div>
+     </div>
+
+     <header class="header">
+          <div id="particles-js"></div>
+          <div class="header-content">
+               <span><img class="img-logo" src="img/sit.jpeg" alt="SIT Logo"></span>
+               <span class="header-title">SESHASAYEE INSTITUTE OF TECHNOLOGY, Trichy</span>
+               <span><img class="img-logo" src="img/FOUNDER.jpeg" alt="Founder"></span>
+          </div>
+     </header>
+
+     <nav class="navbar navbar-expand-lg">
+          <div class="container-fluid">
+               <a class="navbar-brand" href="#" id="department-brand">SIT Dept.</a>
+               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+               </button>
+               <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+                    <ul class="navbar-nav gap-2">
+                         <li class="nav-item"><a class="nav-link" href="./index.html">Home</a></li>
+                         <li class="nav-item dropdown">
+                              <a class="nav-link dropdown-toggle active" href="#" role="button"
+                                   data-bs-toggle="dropdown" aria-expanded="false">
+                                   Departments
+                              </a>
+                              <ul class="dropdown-menu">
+                                   <li><a class="dropdown-item" href="#" onclick="showDepartment('cse')">Computer
+                                             (CSE)</a></li>
+                                   <li><a class="dropdown-item" href="#" onclick="showDepartment('mech')">Mechanical</a>
+                                   </li>
+                                   <li><a class="dropdown-item" href="#" onclick="showDepartment('eee')">Electrical &
+                                             Electronics (EEE)</a></li>
+                                   <li><a class="dropdown-item" href="#" onclick="showDepartment('civil')">Civil</a>
+                                   </li>
+                                   <li><a class="dropdown-item" href="#" onclick="showDepartment('ice')">Instrumentation
+                                             & Control (ICE)</a></li>
+                                   <li><a class="dropdown-item" href="#" onclick="showDepartment('paper')">Paper
+                                             Technology</a></li>
+                              </ul>
+                         </li>
+                         <li class="nav-item"><a class="nav-link" href="./admission.html">Admission</a></li>
+                         <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+                         <li class="nav-item"><a class="nav-link" href="./contact.html">Contact</a></li>
+                         <li class="nav-item"><a class="nav-link" href="Ai.html">AI</a></li>
+                    </ul>
+               </div>
+          </div>
+     </nav>
+
+     <div id="cse" class="department-content-wrapper"></div>
+     <div id="mech" class="department-content-wrapper"></div>
+     <div id="eee" class="department-content-wrapper"></div>
+     <div id="civil" class="department-content-wrapper"></div>
+     <div id="ice" class="department-content-wrapper"></div>
+     <div id="paper" class="department-content-wrapper"></div>
+
+     <div class="footer">
+          &copy; 2025 SIT - Departments. All Rights Reserved.
+     </div>
+
+     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+     <script>
+          // --- MASTER SCRIPT ---
+          window.addEventListener('load', () => {
+               const preloader = document.getElementById('preloader');
+               preloader.style.opacity = '0';
+               setTimeout(() => {
+                    preloader.style.display = 'none';
+               }, 750);
+          });
+
+          const departmentBrand = document.getElementById('department-brand');
+          const brandMap = {
+               cse: "SIT CSE Dept.",
+               ice: "SIT ICE Dept.",
+               mech: "SIT Mechanical Dept.",
+               civil: "SIT Civil Dept.",
+               eee: "SIT EEE Dept.",
+               paper: "SIT Paper Tech Dept."
+          };
+
+          function showDepartment(deptId) {
+               document.querySelectorAll('.department-content-wrapper').forEach(w => w.classList.remove('active'));
+               const activeDept = document.getElementById(deptId);
+               if (activeDept) {
+                    if (activeDept.innerHTML.trim() === '') {
+                         loadDepartmentContent(deptId);
+                    }
+                    activeDept.classList.add('active');
+                    // Ensure the first section is shown by default
+                    const firstSection = activeDept.querySelector('.content-section');
+                    if (firstSection) {
+                         showSection(firstSection.id);
+                    }
+               }
+               departmentBrand.textContent = brandMap[deptId] || "SIT Dept.";
+          }
+
+          function showSection(sectionId) {
+               const deptId = sectionId.split('-')[0];
+               const parentDept = document.getElementById(deptId);
+               if (parentDept) {
+                    parentDept.querySelectorAll('.content-section').forEach(sec => sec.classList.remove('show'));
+                    document.getElementById(sectionId)?.classList.add('show');
+
+                    parentDept.querySelectorAll('.left-sidebar .nav-link').forEach(l => l.classList.remove('active'));
+                    parentDept.querySelector(`.left-sidebar a[onclick="showSection('${sectionId}')"]`)?.classList.add('active');
+               }
+          }
+
+          document.addEventListener('DOMContentLoaded', () => {
+               showDepartment('cse');
+          });
+
+          // PARTICLES.JS CONFIG
+          particlesJS("particles-js", {
+               "particles": {
+                    "number": { "value": 100, "density": { "enable": true, "value_area": 800 } },
+                    "color": { "value": "#ffffff" },
+                    "shape": { "type": "circle" },
+                    "opacity": { "value": 0.8, "random": true, "anim": { "enable": true, "speed": 1, "opacity_min": 0.1, "sync": false } },
+                    "size": { "value": 3, "random": true, "anim": { "enable": false } },
+                    "line_linked": { "enable": true, "distance": 150, "color": "#ffffff", "opacity": 0.4, "width": 1 },
+                    "move": { "enable": true, "speed": 2, "direction": "none", "random": false, "straight": false, "out_mode": "out", "bounce": false }
+               },
+               "interactivity": {
+                    "detect_on": "canvas",
+                    "events": { "onhover": { "enable": true, "mode": "grab" }, "onclick": { "enable": true, "mode": "push" }, "resize": true },
+                    "modes": { "grab": { "distance": 140, "line_linked": { "opacity": 1 } }, "push": { "particles_nb": 4 } }
+               },
+               "retina_detect": true
+          });
+
+          function loadDepartmentContent(deptId) {
+               const container = document.getElementById(deptId);
+               if (!container) return;
+
+               let content = '';
+
+               // --- DEPARTMENT CONTENT TEMPLATES ---
+               if (deptId === 'cse') {
+                    content = `
+                <div class="main-container">
+                    <nav class="left-sidebar">
+                        <div class="nav-header">Computer Engg.</div>
+                        <ul class="nav flex-column">
+                            <li class="nav-item"><a class="nav-link active" onclick="showSection('cse-about')">About Dept.</a></li>
+                            <li class="nav-item"><a class="nav-link" onclick="showSection('cse-vision')">Vision & Mission</a></li>
+                            <li class="nav-item"><a class="nav-link" onclick="showSection('cse-faculty')">Faculty Profile</a></li>
+                            <li class="nav-item"><a class="nav-link" onclick="showSection('cse-syllabus')">Syllabus</a></li>
+                            <li class="nav-item"><a class="nav-link" onclick="showSection('cse-peos')">PEOs & POs</a></li>
+                            <li class="nav-item"><a class="nav-link" onclick="showSection('cse-lab')">Lab Facilities</a></li>
+                            <li class="nav-item"><a class="nav-link" onclick="showSection('cse-placement')">Placement</a></li>
+                            <li class="nav-item"><a class="nav-link" onclick="showSection('cse-rank')">Rank Holders</a></li>
+                            <li class="nav-item"><a class="nav-link" onclick="showSection('cse-pac')">PAC</a></li>
+                            <li class="nav-item"><a class="nav-link" onclick="showSection('cse-mou')">MoU Signed</a></li>
+                        </ul>
+                    </nav>
+                    <main class="main-content">
+                        <section id="cse-about" class="content-section">
+                            <div class="department-banner" id="cse-banner"></div>
+                            <h2>About the CSE Department</h2>
+                            <p style="text-align:justify;">The Department of Computer Engineering was established in 1990.</p>
+                            <p style="text-align:justify;">Our core mission is to deliver quality technical education and foster innovation within the field of computing.</p>
+                            <p style="text-align:justify;">We achieved autonomous status in 1994, granting us the flexibility to design our own curriculum that aligns with the latest industry trends and technological advancements.</p>
+                            <p style="text-align:justify;">The department features state-of-the-art laboratories and experienced faculty, creating a dynamic and effective learning environment.</p>
+                            <p style="text-align:justify;">We are committed to equipping students with practical, hands-on skills in programming, software development, and other emerging technologies.</p>
+                            <p style="text-align:justify;">Our program is proudly accredited by the National Board of Accreditation (NBA), a testament to our high standards of education.</p>
+                        </section>
+                        <section id="cse-vision" class="content-section">
+                            <h2>Vision & Mission</h2><h3>Vision</h3><p>To foster technically proficient, creative and self-governing diploma computer engineers by means of efficient teaching and learning methods to meet industrial and social requirements.</p>
+                            <h3>Mission</h3>
+                            <ul>
+                                <li>To provide quality and contemporary education through innovative teaching-learning process and effective resource utilization.</li>
+                                <li>To inculcate the spirit of self-confidence, teamwork, professional ethics, and environmental awareness.</li>
+                                <li>To reinforce entrepreneurship skills by means of industry-institution interaction.</li>
+                                <li>To ignite students with ideas of research and development.</li>
+                            </ul>
+                        </section>
+                        <section id="cse-faculty" class="content-section">
+                            <h2>Faculty Profile</h2>
+                            <div class="hod-card">
+                                <img src="img/csc/cshod.jpg" alt="HOD of CSE">
+                                <div class="hod-card-content">
+                                   <br>
+                                    <h3>Thiru.T.MUTHAMIL SELVAM, M.Tech.</h3>
+                                    <p><b>Head of the Department (i/c)</b></p>
+                                    <p><strong>Email:</strong> sitcsedepartment@gmail.com | <strong>Mobile:</strong> 9994499781</p>
+                                    <p><strong>AICTE ID:</strong> 1-477942029</p>
+                                    <p>Mr.T.Muthamil Selvam holds a B.E. in Computer Engineering and an M.Tech in Advanced Computing. He is a Cisco Certified Network Associate (CCNA) and a Microsoft Certified Professional (MCP). He serves as an active member of the DOTE syllabus committee and has developed custom software for Autonomous Examinations and Student Attendance Management.</p>
+                                </div>
+                            </div>
+                        </section>
+                        <section id="cse-syllabus" class="content-section"><h2>Curriculum and Syllabus</h2><div class="d-flex flex-wrap gap-3"><a href="#" class="download-btn"><i class="fa fa-download"></i> E-Syllabus</a><a href="#" class="download-btn"><i class="fa fa-download"></i> F-Syllabus</a><a href="#" class="download-btn"><i class="fa fa-download"></i> G-Syllabus</a></div></section>
+                        <section id="cse-peos" class="content-section">
+                            <h2>PEOs, POs & PSOs</h2>
+                            <h3>Program Educational Objectives (PEOs)</h3>
+                            <ul><li>1️⃣ Our graduates will apply the knowledge of computer engineering to plan and design solutions for real-world challenges.</li><li>2️⃣ Our graduates will pursue higher degrees, engage in research, or practice careers in the ICT domain.</li><li>3️⃣ Our graduates will widen their knowledge and expertise by lifelong learning and execute their career with social concern and professional ethics.</li></ul>
+                            <h3>Program Specific Outcomes (PSOs)</h3>
+                            <ul><li>🎯 <b>PSO 1:</b> Apply acquired knowledge and skills to develop software and web applications.</li><li>🎯 <b>PSO 2:</b> Be proficient in administering and maintaining computer systems, servers, and networks.</li></ul>
+                        </section>
+                        <section id="cse-lab" class="content-section">
+                            <h2>Lab Facilities</h2>
+                            <p>The department is equipped with multiple modern, air-conditioned laboratories to provide extensive hands-on experience.</p>
+                            <p>Our labs are powered by high-performance servers and feature the latest licensed software, ensuring students work with current technologies.</p>
+                            <p>We provide a dedicated 1:1 student-to-computer ratio during lab sessions.</p>
+                             <p>Key lab facilities include dedicated spaces for programming, networking, databases, and a project lab for final year students to innovate.</p>
+                             <br>
+                            <div class="gallery">
+                                 <img src="https://i.ibb.co/hK8bV9z/lab1.jpg" alt="CSE Lab 1">
+                                 <img src="https://i.ibb.co/gZfpJ6h/lab2.jpg" alt="CSE Lab 2">
+                                 <img src="https://i.ibb.co/wJgGzQx/lab3.jpg" alt="CSE Lab 3">
+                                 <img src="https://i.ibb.co/Gvx0C0s/lab4.jpg" alt="CSE Lab 4">
+                            </div>
+                        </section>
+                        <section id="cse-placement" class="content-section"><h2>Placement</h2><a href="#" class="download-btn"><i class="fa fa-file-pdf"></i> View Placement Details</a></section>
+                        <section id="cse-rank" class="content-section">
+                            <h2>Rank Holders</h2>
+                            <div class="table-responsive-wrapper">
+                                <table><thead><tr><th>Academic Year</th><th>Name of the Rank Holder (Gold Medalist)</th></tr></thead>
+                                <tbody>
+                                    <tr><td>2017–2020 BATCH</td><td>FAIROSE PARVEEN. M</td></tr>
+                                    <tr><td>2018–2021 BATCH</td><td>MADAHV PRASAD.J</td></tr>
+                                    <tr><td>2019–2022 BATCH</td><td>PRASANNA SRIDHAR.M</td></tr>
+                                    <tr><td>2020–2023 BATCH</td><td>PRVIN KUMAR.M</td></tr>
+                                    <tr><td>2021–2024 BATCH</td><td>ARSH PARVIN.S</td></tr>
+                                </tbody></table>
+                            </div>
+                        </section>
+                        <section id="cse-pac" class="content-section"><h2>Program Advisory Committee</h2><a href="#" class="download-btn"><i class="fa fa-file-pdf"></i> View PAC Letter</a></section>
+                        <section id="cse-mou" class="content-section"><h2>MoU Signed</h2><a href="#" class="download-btn"><i class="fa fa-download"></i> View MoU Details</a></section>
+                    </main>
+                </div>`;
+               } else if (deptId === 'mech') {
+                    content = `
+                <div class="main-container">
+                    <nav class="left-sidebar">
+                        <div class="nav-header">Mechanical Engg.</div>
+                        <ul class="nav flex-column">
+                            <li class="nav-item"><a class="nav-link active" onclick="showSection('mech-about')">About Dept.</a></li>
+                            <li class="nav-item"><a class="nav-link" onclick="showSection('mech-vision')">Vision & Mission</a></li>
+                            <li class="nav-item"><a class="nav-link" onclick="showSection('mech-faculty')">Faculty Profile</a></li>
+                            <li class="nav-item"><a class="nav-link" onclick="showSection('mech-syllabus')">Syllabus</a></li>
+                            <li class="nav-item"><a class="nav-link" onclick="showSection('mech-peos')">PEOs & POs</a></li>
+                            <li class="nav-item"><a class="nav-link" onclick="showSection('mech-lab')">Lab Facilities</a></li>
+                            <li class="nav-item"><a class="nav-link" onclick="showSection('mech-placement')">Placement</a></li>
+                            <li class="nav-item"><a class="nav-link" onclick="showSection('mech-rank')">Rank Holders</a></li>
+                            <li class="nav-item"><a class="nav-link" onclick="showSection('mech-achievements')">Student Achievements</a></li>
+                            <li class="nav-item"><a class="nav-link" onclick="showSection('mech-pac')">PAC</a></li>
+                            <li class="nav-item"><a class="nav-link" onclick="showSection('mech-mou')">MoU Signed</a></li>
+                        </ul>
+                    </nav>
+                    <main class="main-content">
+                        <section id="mech-about" class="content-section">
+                            <div class="department-banner" id="mech-banner">MECHANICAL ENGINEERING</div>
+                            <h2>About the Department</h2>
+                            <p style="text-align:justify;">The Department of Mechanical Engineering, established in 1952, is one of the pioneering departments of the institution.</p>
+                            <p style="text-align:justify;">We boast an excellent infrastructure, including a massive workshop, numerous laboratories, and a state-of-the-art Computer Integrated Manufacturing (CIM) lab with dedicated workstations.</p>
+                            <p style="text-align:justify;">The department has grown by leaps and bounds into a prestigious center for mechanical engineering, attaining Autonomous status in the year 1994-95.</p>
+                            <p style="text-align:justify;">As a testament to our commitment to quality, the department received ISO certification and achieved the significant milestone of accreditation by the NBA in 2024.</p>
+                        </section>
+                        <section id="mech-vision" class="content-section">
+                            <h2>Vision & Mission</h2><h3>Vision</h3><p>To produce high self-esteem and technical expertise who can adapt themselves for the changing trends of industrial and social requirements by effective teaching and learning methods.</p>
+                            <h3>Mission</h3><ul><li>To maintain best quality of education by incorporating changing trends of industry in curriculum to satisfy all stakeholders.</li><li>To produce leaders who can serve society and nation by finding solutions to region-wise and global-wise community problems.</li><li>To create competent professionals who are trained in the design and development of mechanical engineering systems to accept any challenges that arise in rapidly changing technology.</li></ul>
+                        </section>
+                        <section id="mech-faculty" class="content-section">
+                            <h2>Faculty Profile</h2>
+                            <div class="hod-card">
+                                <img src="img/mech/" alt="HOD of Mechanical">
+                                <div class="hod-card-content">
+                                    <h3>Dr.K.Vijaykumar</h3>
+                                    <p><b>Head of the Department (i/c)</b></p>
+                                    <p><strong>Email:</strong> sitmechdepartment@gmail.com | <strong>Mobile:</strong> 9791711816</p>
+                                    <p><strong>AICTE ID:</strong> 1-459281921</p>
+                                    <p>He completed pre-commission training at OTA, Nagpur, earning a national second rank and a bronze medal from the Director General of NCC. He obtained his M.E. from Anna University in 1994 and earned his Ph.D. in 2015, specializing in machining bidirectional carbon-reinforced polymer composite tubes.</p>
+                                </div>
+                            </div>
+                        </section>
+                        <section id="mech-lab" class="content-section">
+                            <h2>Lab Facilities</h2>
+                             <p>Our department provides students with extensive hands-on experience through a wide range of well-equipped laboratories and workshops.</p>
+                             <p>These facilities are crucial for bridging the gap between theoretical knowledge and practical, real-world engineering applications.</p>
+                             <p>Key facilities include a state-of-the-art CIM Lab, a comprehensive Machine Shop, a modern Welding Lab, and an Automobile and Thermal Engineering Lab.</p>
+                             <p>All labs adhere to strict safety protocols, ensuring a safe and productive learning environment for all students.</p>
+                             <br>
+                            <div class="gallery"><img src="https://i.ibb.co/3WqPzDB/AC-Lab.jpg" alt="AC Lab"><img src="https://i.ibb.co/Dzd6k2h/CIM-Lab.jpg" alt="CIM Lab"><img src="https://i.ibb.co/hLkTQ7P/Machine-shop.jpg" alt="Machine Shop"><img src="https://i.ibb.co/GQLvQfg/Welding-Lab.jpg" alt="Welding Lab"></div>
+                        </section>
+                        <section id="mech-rank" class="content-section"><h2>Department Rank Holders</h2><div class="table-responsive-wrapper"><table><thead><tr><th>Batch</th><th>Student Name</th></tr></thead><tbody><tr><td>2019–2022 BATCH</td><td>AAKASSH. M</td></tr><tr><td>2020–2023 BATCH</td><td>FAHADH.A</td></tr><tr><td>2021–2024 BATCH</td><td>VIJAY PRANAVE G</td></tr></tbody></table></div></section>
+                        <section id="mech-achievements" class="content-section">
+                            <h2>Student Achievements</h2>
+                            <h3>Sports</h3><ul><li>Selvan M. Mohamed Aashik – Runner-up in Handball, Football League, Taj Ball, Sports Sackrace.</li><li>Selvan M. Arun Kumar & G. Sanjay Saminathan – District Level Hockey.</li></ul>
+                            <h3>Workshops & Events</h3><ul><li>Selvan S. Nirmal, A. Sakthivel, & P. Naveen Kumar attended the "Synergizing IoT and Automation Workshop 2025" at SASTRA University.</li></ul>
+                            <h3>National Cadet Corps (NCC)</h3><ul><li>Selvan R. Rahul – Participated in CATC, TSC 2024, TSC 2025, and Army Attachment Camp 2025.</li></ul>
+                        </section>
+                        <section id="mech-placement" class="content-section"><h2>Placement</h2><a href="#" class="download-btn"><i class="fa fa-file-pdf"></i> View Placement Details</a></section>
+                        <section id="mech-syllabus" class="content-section"><h2>Syllabus</h2><div class="d-flex flex-wrap gap-3"><a href="#" class="download-btn">E-Syllabus</a><a href="#" class="download-btn">F-Syllabus</a><a href="#" class="download-btn">G-Syllabus</a></div></section>
+                        <section id="mech-peos" class="content-section"><h2>PEOs, POs & PSOs</h2><h3>Program Educational Objectives (PEOs)</h3><ul><li>1️⃣ Use the knowledge of mechanical engineering to develop concepts that brings out solution for the real world challenges.</li><li>2️⃣ Analyze the design and use skills in order to formulate and solve mechanical engineering problems.</li><li>3️⃣ Practice mechanical engineering in a reasonable professional and ethical manner.</li></ul></section>
+                        <section id="mech-pac" class="content-section"><h2>Program Advisory Committee</h2><a href="#" class="download-btn"><i class="fa fa-file-pdf"></i> View PAC Letter</a></section>
+                        <section id="mech-mou" class="content-section"><h2>MoU Signed</h2><a href="#" class="download-btn"><i class="fa fa-download"></i> View MoU Details</a></section>
+                    </main>
+                </div>`;
+               } else if (deptId === 'eee') {
+                    content = `
+                <div class="main-container">
+                    <nav class="left-sidebar"><div class="nav-header">EEE</div>
+                        <ul class="nav flex-column">
+                            <li class="nav-item"><a class="nav-link active" onclick="showSection('eee-about')">About Dept.</a></li>
+                            <li class="nav-item"><a class="nav-link" onclick="showSection('eee-vision')">Vision & Mission</a></li>
+                            <li class="nav-item"><a class="nav-link" onclick="showSection('eee-faculty')">Faculty Profile</a></li>
+                            <li class="nav-item"><a class="nav-link" onclick="showSection('eee-syllabus')">Syllabus</a></li>
+                            <li class="nav-item"><a class="nav-link" onclick="showSection('eee-peos')">PEOs & POs</a></li>
+                            <li class="nav-item"><a class="nav-link" onclick="showSection('eee-lab')">Lab Facilities</a></li>
+                            <li class="nav-item"><a class="nav-link" onclick="showSection('eee-placement')">Placement</a></li>
+                            <li class="nav-item"><a class="nav-link" onclick="showSection('eee-rank')">Rank Holders</a></li>
+                            <li class="nav-item"><a class="nav-link" onclick="showSection('eee-pac')">PAC</a></li>
+                            <li class="nav-item"><a class="nav-link" onclick="showSection('eee-mou')">MoU Signed</a></li>
+                        </ul>
+                    </nav>
+                    <main class="main-content">
+                        <section id="eee-about" class="content-section">
+                             <div class="department-banner" id="eee-banner">ELECTRICAL & ELECTRONICS</div>
+                             <h2>About the Department</h2>
+                             <p style="text-align:justify;">The Department of Electrical and Electronics Engineering (EEE) was established in 1952, making it a cornerstone of the Seshasayee Institute of Technology.</p>
+                             <p style="text-align:justify;">In recognition of its academic excellence, the department was granted Autonomous status in the academic year 1994–95 and has also earned ISO certification for maintaining high quality standards.</p>
+                             <p style="text-align:justify;">We offer a three-year, full-time Diploma in Electrical and Electronics Engineering, supported by state-of-the-art infrastructure.</p>
+                             <p style="text-align:justify;">Our facilities include a fully equipped workshop, modern laboratories, and a specialized Programmable Logic Controller (PLC) lab to meet industry demands.</p>
+                        </section>
+                        <section id="eee-vision" class="content-section"><h2>Vision & Mission</h2><h3>Vision</h3><p>To meet the challenges of new technological advances and to provide update knowledge in the state-of-the-art technology, re-orientation and up gradation of the curriculum to the level of industry relevant learning and training and thus to be a premier technical department that strives continuously for excellence in education.</p><h3>Mission</h3><ul><li>To produce Electrical Engineers of high Caliber to serve the Society and Nation.</li><li>To bridge the gap between industry and academic by framing curriculum and syllabus based on industrial needs.</li><li>To create and sustain environment of learning in which students acquire knowledge and learn to apply it professionally with due consideration of social and economical issues.</li></ul></section>
+                        <section id="eee-faculty" class="content-section"><h2>Faculty Profile</h2><div class="hod-card"><img src="img/eee/" alt="HOD of EEE"><div class="hod-card-content"><h3>SG Kathiravan</h3><p><b>Head of the Department (i/c)</b></p><p><strong>Email:</strong> siteeedepartment@gmail.com | <strong>Mobile:</strong> 9894208878</p><p><strong>AICTE ID:</strong> 1-477942171</p><p>With a career spanning over 30 years and a Master’s Degree in Energy Engineering, Mr. S.G. Kadhiravan leads the EEE department. He has actively participated in syllabus development and faculty training programs under the Directorate of Technical Education (DOTE), Tamil Nadu.</p></div></div></section>
+                        <section id="eee-lab" class="content-section">
+                             <h2>Lab Facilities</h2>
+                             <p>The EEE department provides an excellent learning environment with a variety of well-equipped laboratories to impart practical knowledge.</p>
+                             <p>Our labs are designed to help students gain hands-on experience in core areas of electrical and electronics engineering.</p>
+                             <p>Key labs include the Electrical Machines Lab, Power Electronics Lab, Control Systems Lab, and a modern PLC and Microcontroller Lab.</p>
+                             <p>These facilities ensure that our students are well-prepared for the technical challenges of the industry.</p>
+                             <br>
+                             <div class="gallery"><img src="https://i.ibb.co/sK6Xf2x/labphoto1.jpg" alt="EEE Lab 1"><img src="https://i.ibb.co/QcY1gm4/labphoto2.jpg" alt="EEE Lab 2"><img src="https://i.ibb.co/5c1P9wL/labphoto3.jpg" alt="EEE Lab 3"><img src="https://i.ibb.co/yqgJjSL/labphoto4.jpg" alt="EEE Lab 4"></div>
+                        </section>
+                        <section id="eee-rank" class="content-section"><h2>Department Rank Holders</h2><div class="table-responsive-wrapper"><table><thead><tr><th>Batch</th><th>Student Name</th></tr></thead><tbody><tr><td>2017–2020</td><td>VAISHALI.C</td></tr><tr><td>2018–2021</td><td>IDHAYA.S</td></tr><tr><td>2019–2022</td><td>PAVITHRA.S</td></tr><tr><td>2020–2023</td><td>HARSHINI.R</td></tr><tr><td>2021–2024</td><td>MOHAMMED SALIH.M</td></tr></tbody></table></div></section>
+                        <section id="eee-placement" class="content-section"><h2>Placement</h2><a href="#" class="download-btn"><i class="fa fa-file-pdf"></i> View Placement Details</a></section>
+                        <section id="eee-syllabus" class="content-section"><h2>Syllabus</h2><div class="d-flex flex-wrap gap-3"><a href="#" class="download-btn">E-Scheme</a><a href="#" class="download-btn">F-Scheme</a><a href="#" class="download-btn">G-Scheme</a></div></section>
+                        <section id="eee-peos" class="content-section"><h2>PEOs, POs & PSOs</h2><h3>Program Educational Objectives (PEOs)</h3><ul><li>1️⃣ To have fundamental and broad knowledge in Electrical and Electronics Engineering.</li><li>2️⃣ To apply creatively their understanding of engineering principles to the solution of problems arising in whatever career they choose.</li></ul></section>
+                        <section id="eee-pac" class="content-section"><h2>Program Advisory Committee</h2><a href="#" class="download-btn"><i class="fa fa-file-pdf"></i> View PAC Meeting Details (2025)</a></section>
+                        <section id="eee-mou" class="content-section"><h2>MoU Signed</h2><p>Details about Memorandums of Understanding will be updated soon.</p></section>
+                    </main>
+                </div>`;
+               } else if (deptId === 'civil') {
+                    content = `
+                <div class="main-container">
+                    <nav class="left-sidebar"><div class="nav-header">Civil Engg.</div>
+                        <ul class="nav flex-column">
+                            <li class="nav-item"><a class="nav-link active" onclick="showSection('civil-about')">About Dept.</a></li>
+                            <li class="nav-item"><a class="nav-link" onclick="showSection('civil-vision')">Vision & Mission</a></li>
+                            <li class="nav-item"><a class="nav-link" onclick="showSection('civil-faculty')">Faculty Profile</a></li>
+                            <li class="nav-item"><a class="nav-link" onclick="showSection('civil-syllabus')">Syllabus</a></li>
+                            <li class="nav-item"><a class="nav-link" onclick="showSection('civil-peos')">PEOs & POs</a></li>
+                            <li class="nav-item"><a class="nav-link" onclick="showSection('civil-lab')">Lab Facilities</a></li>
+                            <li class="nav-item"><a class="nav-link" onclick="showSection('civil-placement')">Placement</a></li>
+                            <li class="nav-item"><a class="nav-link" onclick="showSection('civil-rank')">Rank Holders</a></li>
+                            <li class="nav-item"><a class="nav-link" onclick="showSection('civil-achievements')">Student Achievements</a></li>
+                            <li class="nav-item"><a class="nav-link" onclick="showSection('civil-pac')">PAC</a></li>
+                            <li class="nav-item"><a class="nav-link" onclick="showSection('civil-mou')">MoU Signed</a></li>
+                        </ul>
+                    </nav>
+                    <main class="main-content">
+                        <section id="civil-about" class="content-section">
+                            <div class="department-banner" id="civil-banner">CIVIL ENGINEERING</div>
+                            <h2>About the Department</h2>
+                            <p style="text-align:justify;">The Department of Civil Engineering has been a part of the institute since its inception in 1952.</p>
+                            <p style="text-align:justify;">It achieved Autonomous status in the academic year 1994-95, which has enabled the department to frame a curriculum that is both modern and relevant to industry needs.</p>
+                            <p style="text-align:justify;">Our commitment to quality education is underscored by our ISO certification and the prestigious NBA accreditation, which we achieved in 2024.</p>
+                            <p style="text-align:justify;">We focus on creating competent professionals trained in the design and development of civil engineering systems to meet global challenges.</p>
+                        </section>
+                        <section id="civil-vision" class="content-section"><h2>Vision & Mission</h2><h3>Vision</h3><p>To impart knowledge and excellence that brings out civil engineers with high technical competencies and promotes professional assignments to meet the current and future challenges in civil engineering.</p><h3>Mission</h3><ul><li>To create, disseminate, and integrate knowledge of engineering, science, and technology that expands the civil and environmental engineering knowledge base, enabling the betterment of human society.</li><li>To create competent professionals trained in the design and development of civil engineering systems who can contribute to meeting industry requirements.</li></ul></section>
+                        <section id="civil-faculty" class="content-section"><h2>Faculty Profile</h2><div class="hod-card"><img src="img/civil/c-1.jpg" alt="HOD of Civil"><div class="hod-card-content"><h3>R. RAJASEKARAN</h3><p><b>Head of the Department (i/c)</b></p><p><strong>Email:</strong> sitcivildepartment@gmail.com | <strong>Mobile:</strong> 9443399091</p><p><strong>AICTE ID:</strong> 1-477942171</p><p>Mr. Rajasekaran holds an AMIE degree from The Institution of Engineers (India) and a Master of Engineering degree in Structural Engineering from the Regional Engineering College (now NIT), Tiruchirappalli. He has published six research papers in leading technical journals and was honored with the 'Best Faculty' award by Nehru College of Engineering, Coimbatore.</p></div></div></section>
+                        <section id="civil-lab" class="content-section">
+                             <h2>Lab Facilities</h2>
+                             <p>The Civil Engineering department is equipped with comprehensive laboratory facilities that provide students with practical exposure to the field.</p>
+                             <p>Our labs are essential for understanding the material properties and structural behaviors that are fundamental to civil engineering.</p>
+                             <p>We have specialized labs including the Strength of Materials Lab, Surveying Lab, Concrete and Highway Engineering Lab, and a dedicated CAD Lab.</p>
+                             <p>Students utilize modern equipment and software to conduct experiments, ensuring they develop the technical skills required by the industry.</p>
+                             <br>
+                            <div class="gallery"><img src="https://i.ibb.co/3WqPzDB/AC-Lab.jpg" alt="Civil Lab 1"><img src="https://i.ibb.co/Dzd6k2h/CIM-Lab.jpg" alt="Civil Lab 2"></div>
+                        </section>
+                        <section id="civil-placement" class="content-section"><h2>Placement Details</h2><div class="table-responsive-wrapper"><table><thead><tr><th>Academic Year</th><th>Students Placed</th><th>Recruiting Organizations</th></tr></thead><tbody><tr><td>2019–2020</td><td>30</td><td rowspan="3">McDermott<br>CAD Software Pvt. Ltd.<br>K.B.R Pvt. Ltd.<br>Woods India Pvt. Ltd.</td></tr><tr><td>2022–2023</td><td>18</td></tr><tr><td>2023–2024</td><td>19</td></tr></tbody></table></div></section>
+                        <section id="civil-rank" class="content-section"><h2>Rank Holders (Gold Medalists)</h2><div class="table-responsive-wrapper"><table><thead><tr><th>Academic Year</th><th>Name of the Rank Holder</th></tr></thead><tbody><tr><td>2021–2022</td><td>Nasrin Banu. E</td></tr><tr><td>2022–2023</td><td>A. Kaviya</td></tr><tr><td>2023–2024</td><td>Varsha. R</td></tr></tbody></table></div></section>
+                        <section id="civil-achievements" class="content-section"><h2>Student Achievements</h2><h3>Academic & Technical Competitions</h3><ul><li>Selvi G.N. Vivekaa Sree & B. Sharmili – Second place at the National Level Technical Symposium, Najiah Lingammal Polytechnic College (28.02.2025) – “Recycled Materials in Construction”.</li></ul><h3>Sports Achievements</h3><ul><li>Selvi B. Sharmili – First place in District Level Badminton, Kongunadu Polytechnic College (21.01.2025).</li></ul></section>
+                        <section id="civil-syllabus" class="content-section"><h2>Syllabus</h2><div class="d-flex flex-wrap gap-3"><a href="#" class="download-btn">E-Syllabus</a><a href="#" class="download-btn">F-Syllabus</a><a href="#" class="download-btn">G-Syllabus</a></div></section>
+                        <section id="civil-peos" class="content-section"><h2>PEOs, POs & PSOs</h2><h3>Program Educational Objectives (PEOs)</h3><ul><li>1️⃣ Function effectively as civil engineering professionals in industry, government, or other organizations by designing, improving, leading, and implementing efficient civil engineering practices.</li></ul></section>
+                        <section id="civil-pac" class="content-section"><h2>Program Advisory Committee</h2><a href="#" class="download-btn"><i class="fa fa-file-pdf"></i> View PAC Letter</a></section>
+                        <section id="civil-mou" class="content-section"><h2>MoU Signed</h2><a href="#" class="download-btn"><i class="fa fa-download"></i> View MoU Details</a></section>
+                    </main>
+                </div>`;
+               } else if (deptId === 'ice') {
+                    content = `
+                <div class="main-container">
+                    <nav class="left-sidebar"><div class="nav-header">ICE</div>
+                        <ul class="nav flex-column">
+                            <li class="nav-item"><a class="nav-link active" onclick="showSection('ice-about')">About Dept.</a></li>
+                            <li class="nav-item"><a class="nav-link" onclick="showSection('ice-vision')">Vision & Mission</a></li>
+                            <li class="nav-item"><a class="nav-link" onclick="showSection('ice-faculty')">Faculty Profile</a></li>
+                            <li class="nav-item"><a class="nav-link" onclick="showSection('ice-syllabus')">Syllabus</a></li>
+                            <li class="nav-item"><a class="nav-link" onclick="showSection('ice-peos')">PEOs & POs</a></li>
+                            <li class="nav-item"><a class="nav-link" onclick="showSection('ice-lab')">Lab Facilities</a></li>
+                            <li class="nav-item"><a class="nav-link" onclick="showSection('ice-placement')">Placement</a></li>
+                            <li class="nav-item"><a class="nav-link" onclick="showSection('ice-rank')">Rank Holders</a></li>
+                            <li class="nav-item"><a class="nav-link" onclick="showSection('ice-pac')">PAC</a></li>
+                            <li class="nav-item"><a class="nav-link" onclick="showSection('ice-mou')">MoU Signed</a></li>
+                        </ul>
+                    </nav>
+                    <main class="main-content">
+                        <section id="ice-about" class="content-section">
+                             <div class="department-banner" id="ice-banner">INSTRUMENTATION & CONTROL</div>
+                             <h2>About the Department</h2>
+                             <p style="text-align:justify;">The Department of Instrumentation and Control Engineering was established in 1990 to cater to the growing demand for automation professionals.</p>
+                             <p style="text-align:justify;">Our primary focus is to provide quality education and promote innovation in the fields of industrial automation and process control.</p>
+                             <p style="text-align:justify;">By attaining autonomous status in 1994, the department gained the crucial flexibility to design its own curriculum, ensuring it remains aligned with rapid industry advancements and emerging technologies.</p>
+                        </section>
+                        <section id="ice-vision" class="content-section"><h2>Vision & Mission</h2><h3>Vision</h3><p>To produce technically competent skilful engineers to respond the society socially and morally to cater the needs of the industries and society.</p><h3>Mission</h3><ul><li>To acquire Instrumentation, Control and Allied Engineering, Science and Technology Knowledge.</li><li>To acquire Quality education, Skills, Moral Values & bridge the gaps in curriculum towards industrial needs.</li></ul></section>
+                        <section id="ice-faculty" class="content-section"><h2>Faculty Profile</h2><div class="hod-card"><img src="https://i.ibb.co/80f765w/hod-ice.jpg" alt="HOD of ICE"><div class="hod-card-content"><h3>Thiru.K.ANNAMALAI, M.E.</h3><p><b>Head of the Department (i/c)</b></p><p><strong>Email:</strong> icedeptsit@gmail.com | <strong>Mobile:</strong> 9443586484</p><p><strong>AICTE ID:</strong> 1-477942183</p><p>Leading the ICE department since its establishment in 1990, he has been instrumental in achieving autonomous status and aligning the curriculum with industry advancements in automation and control engineering.</p></div></div></section>
+                        <section id="ice-lab" class="content-section">
+                             <h2>Lab Facilities</h2>
+                             <p>The ICE department is equipped with specialized labs that provide students with in-depth practical training in industrial automation and control systems.</p>
+                             <p>These facilities are crucial for developing the skills needed to work in modern process industries.</p>
+                             <p>Our main laboratories include the Process Control Lab, Industrial Instrumentation Lab, and a Virtual Instrumentation Lab featuring software like LabVIEW.</p>
+                             <p>Through hands-on experiments, students learn to calibrate instruments, design control loops, and implement automation solutions.</p>
+                             <br>
+                            <div class="gallery"><img src="https://i.ibb.co/yNyrB3f/labphotos1-ice.jpg" alt="ICE Lab 1"><img src="https://i.ibb.co/mHhMWJd/labphotos2-ice.jpg" alt="ICE Lab 2"><img src="https://i.ibb.co/z5pBwYh/labphotos3-ice.jpg" alt="ICE Lab 3"><img src="https://i.ibb.co/2g35vL6/labphotos4-ice.jpg" alt="ICE Lab 4"></div>
+                        </section>
+                        <section id="ice-rank" class="content-section"><h2>Department Rank Holders (Gold Medalists)</h2><div class="table-responsive-wrapper"><table><thead><tr><th>Course Duration</th><th>Name</th></tr></thead><tbody><tr><td>2024 - 2025</td><td>Jagan. P</td></tr><tr><td>2023 - 2024</td><td>Kalaiyarasan A</td></tr><tr><td>2019 - 2022</td><td>Arunkumar S</td></tr><tr><td>2018 - 2021</td><td>Leena D</td></tr></tbody></table></div></section>
+                        <section id="ice-placement" class="content-section"><h2>Placement</h2><a href="#" class="download-btn"><i class="fa fa-file-pdf"></i> View Placement Details</a></section>
+                        <section id="ice-syllabus" class="content-section"><h2>Syllabus</h2><div class="d-flex flex-wrap gap-3"><a href="#" class="download-btn">E-Scheme</a><a href="#" class="download-btn">F-Scheme</a><a href="#" class="download-btn">G-Scheme</a></div></section>
+                        <section id="ice-peos" class="content-section"><h2>PEOs, POs & PSOs</h2><h3>Program Educational Objectives (PEOs)</h3><ul><li>1️⃣ Become successful Engineers in Organizations or opt for Higher Studies.</li><li>2️⃣ Exhibit professional and ethical attitudes, communication skills, and teamwork.</li><li>3️⃣ Engage in lifelong self-learning and acquire multidisciplinary knowledge through projects to meet social needs.</li></ul></section>
+                        <section id="ice-pac" class="content-section"><h2>Program Advisory Committee</h2><a href="#" class="download-btn"><i class="fa fa-file-pdf"></i> View PAC Letter</a></section>
+                        <section id="ice-mou" class="content-section"><h2>MoU Signed</h2><a href="#" class="download-btn"><i class="fa fa-download"></i> View MoU Details</a></section>
+                    </main>
+                </div>`;
+               } else if (deptId === 'paper') {
+                    content = `
+                <div class="main-container">
+                    <nav class="left-sidebar"><div class="nav-header">Paper Tech.</div>
+                        <ul class="nav flex-column">
+                            <li class="nav-item"><a class="nav-link active" onclick="showSection('paper-about')">About Dept.</a></li>
+                            <li class="nav-item"><a class="nav-link" onclick="showSection('paper-vision')">Vision & Mission</a></li>
+                            <li class="nav-item"><a class="nav-link" onclick="showSection('paper-faculty')">Faculty Profile</a></li>
+                            <li class="nav-item"><a class="nav-link" onclick="showSection('paper-syllabus')">Syllabus</a></li>
+                            <li class="nav-item"><a class="nav-link" onclick="showSection('paper-peos')">PEOs & POs</a></li>
+                            <li class="nav-item"><a class="nav-link" onclick="showSection('paper-lab')">Lab Facilities</a></li>
+                            <li class="nav-item"><a class="nav-link" onclick="showSection('paper-placement')">Placement</a></li>
+                            <li class="nav-item"><a class="nav-link" onclick="showSection('paper-rank')">Rank Holders</a></li>
+                            <li class="nav-item"><a class="nav-link" onclick="showSection('paper-pac')">PAC</a></li>
+                            <li class="nav-item"><a class="nav-link" onclick="showSection('paper-mou')">MoU Signed</a></li>
+                        </ul>
+                    </nav>
+                    <main class="main-content">
+                        <section id="paper-about" class="content-section">
+                             <div class="department-banner" id="paper-banner">PAPER TECHNOLOGY</div>
+                             <h2>About the Department</h2>
+                             <p style="text-align:justify;">The Department of Pulp and Paper Technology launched the first Sandwich Diploma Programme in this field in South India during the academic year 1983–84.</p>
+                             <p style="text-align:justify;">A key highlight and integral part of the course is its one-year in-plant training at various partnering paper mills, where students receive a monthly stipend and invaluable industry exposure.</p>
+                             <p style="text-align:justify;">This unique model has led to exceptional outcomes, and the department proudly boasts a consistent 100% placement record in top paper and chemical industries across the country.</p>
+                             <p style="text-align:justify;">In recognition of its excellent program structure and quality, the department was accredited by the National Board of Accreditation (NBA) in 2024.</p>
+                        </section>
+                        <section id="paper-vision" class="content-section"><h2>Vision & Mission</h2><h3>Vision</h3><p>To develop highly skilled, globally competitive, and innovative paper technologists and entrepreneurs by providing quality education, promoting research and innovation, and equipping students with the technical, managerial, and ethical competencies required to meet the evolving challenges of the paper industry.</p><h3>Mission</h3><ul><li>To integrate sustainable and need-based education through a student-centric teaching-learning environment to meet industry and societal demands.</li><li>To foster ethical values, social responsibility, and a spirit of humanitarian service among students.</li></ul></section>
+                        <section id="paper-faculty" class="content-section"><h2>Faculty Profile</h2><div class="hod-card"><img src="https://i.ibb.co/g4rZ704/HOD-paper.jpg" alt="HOD of Paper Tech"><div class="hod-card-content"><h3>B. SINTHANAISELVAN</h3><p><b>Head of the Department (i/c)</b></p><p><strong>Email:</strong> sitPaperdepartment@gmail.com | <strong>Mobile:</strong> 9551078350</p><p><strong>AICTE ID:</strong> 1-508984445</p><p>Mr. B. Sinthanaiselvan has been with the institution since 2012 and became HOD (i/c) in 2017. He actively contributes to curriculum reform as part of the DOTE syllabus committee and is known for his work in process design and educational software.</p></div></div></section>
+                        <section id="paper-lab" class="content-section">
+                             <h2>Lab Facilities</h2>
+                             <p>The Department of Paper Technology is equipped with highly specialized laboratories that cover the entire lifecycle of paper production.</p>
+                             <p>These labs provide students with a comprehensive, hands-on understanding of the pulping, manufacturing, and testing processes.</p>
+                             <p>Our key facilities include the Pulping Lab, Paper Making Lab, and a Paper and Board Testing Lab, which are equipped with industry-standard equipment.</p>
+                             <p>This practical training is essential for preparing our students to be effective and knowledgeable technologists in the paper industry from day one.</p>
+                             <br>
+                            <div class="gallery"><img src="https://i.ibb.co/bX1nQ5Q/labphoto11-paper.png" alt="Paper Lab 1"><img src="https://i.ibb.co/xLwcnph/labphoto1-paper.jpg" alt="Paper Lab 2"><img src="https://i.ibb.co/7C99K0D/labphoto3-paper.png" alt="Paper Lab 3"><img src="https://i.ibb.co/Y2B7WJb/labphoto4-paper.png" alt="Paper Lab 4"></div>
+                        </section>
+                        <section id="paper-placement" class="content-section"><h2>Placement Details (2021-2024 Batch)</h2><div class="table-responsive-wrapper"><table><thead><tr><th>Student Name</th><th>Placement Status / Company</th></tr></thead><tbody><tr><td>ANBUMANI.P.L</td><td>SESHASAYEE PAPER AND BOARDS LIMITED</td></tr><tr><td>GIRIMURUGAN.S</td><td>SESHASAYEE PAPER AND BOARDS LIMITED</td></tr><tr><td>GUNASEELAN.K</td><td>Sripathi paper and boards pvt limited</td></tr><tr><td>SOLOMON D</td><td>APPM</td></tr></tbody></table></div></section>
+                        <section id="paper-rank" class="content-section"><h2>Rank Holders (Gold Medalists)</h2><div class="table-responsive-wrapper"><table><thead><tr><th>Academic Year</th><th>Name</th></tr></thead><tbody><tr><td>2021–2022</td><td>Nasrin Banu. E</td></tr><tr><td>2022–2023</td><td>A. Kaviya</td></tr><tr><td>2023–2024</td><td>Varsha. R</td></tr></tbody></table></div></section>
+                        <section id="paper-syllabus" class="content-section"><h2>Syllabus</h2><div class="d-flex flex-wrap gap-3"><a href="#" class="download-btn">E-Syllabus</a><a href="#" class="download-btn">F-Syllabus</a><a href="#" class="download-btn">G-Syllabus</a></div></section>
+                        <section id="paper-peos" class="content-section"><h2>PEOs, POs & PSOs</h2><h3>Program Educational Objectives (PEOs)</h3><ul><li>1️⃣ Lead a successful career as a professional or entrepreneur in the field of paper technology and allied industries.</li><li>2️⃣ Continuously adapt to advancements in paper technology by upgrading technical skills.</li></ul></section>
+                        <section id="paper-pac" class="content-section"><h2>Program Advisory Committee</h2><a href="#" class="download-btn"><i class="fa fa-file-pdf"></i> View PAC Letter</a></section>
+                        <section id="paper-mou" class="content-section"><h2>MoU Signed</h2><div class="d-flex flex-wrap gap-3"><a href="#" class="download-btn">MoU with TNPL</a><a href="#" class="download-btn">MoU with Ocean Green Biology</a></div></section>
+                    </main>
+                </div>`;
+               }
+
+               container.innerHTML = content;
+          }
+     </script>
+</body>
+
+</html>

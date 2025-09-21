@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Assistant</title>
+    <style>
+        /* All CSS is correct, no changes needed */
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #f0f2f5; margin: 0; display: flex; justify-content: center; align-items: center; height: 100vh; }
+        .chat-container { width: 90%; max-width: 600px; height: 90vh; max-height: 800px; background-color: #ffffff; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); display: flex; flex-direction: column; overflow: hidden; }
+        .chat-header { background-color: #4A90E2; color: white; padding: 15px 20px; text-align: center; font-weight: 600; font-size: 1.2rem; border-bottom: 1px solid #ddd; }
+        .chat-messages { flex-grow: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 20px; }
+        .message-row { display: flex; align-items: flex-end; gap: 10px; }
+        .avatar { width: 35px; height: 35px; border-radius: 50%; display: flex; justify-content: center; align-items: center; color: white; font-weight: 500; flex-shrink: 0; }
+        .avatar.ai { background-color: #6c757d; }
+        .avatar.user { background-color: #4A90E2; }
+        .message-row.user { justify-content: flex-end; }
+        .message { max-width: 80%; padding: 12px 18px; border-radius: 18px; line-height: 1.5; word-wrap: break-word; }
+        .message.user { background-color: #4A90E2; color: white; border-bottom-right-radius: 4px; }
+        .message.ai { background-color: #e9e9eb; color: #333; border-bottom-left-radius: 4px; }
+        .chat-input-area { display: flex; padding: 15px; border-top: 1px solid #ddd; background-color: #f9f9f9; }
+        #userInput { flex-grow: 1; padding: 12px; border: 1px solid #ccc; border-radius: 20px; margin-right: 10px; font-size: 1rem; outline: none; transition: border-color 0.2s; }
+        #userInput:focus { border-color: #4A90E2; }
+        #sendButton { padding: 12px 20px; border: none; background-color: #4A90E2; color: white; border-radius: 20px; cursor: pointer; font-size: 1rem; font-weight: 500; transition: background-color 0.2s; }
+        #sendButton:hover { background-color: #357ABD; }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-header">
+            K-gen Assistant ✨
+        </div>
+        <div class="chat-messages" id="chatMessages"></div>
+        <div class="chat-input-area">
+            <input type="text" id="userInput" placeholder="Ask me anything..." autocomplete="off">
+            <button id="sendButton">Send</button>
+        </div>
+    </div>
+
+    <script>
+        const chatMessages = document.getElementById('chatMessages');
+        const userInput = document.getElementById('userInput');
+        const sendButton = document.getElementById('sendButton');
+        
+        // IMPORTANT: Replace "YOUR_API_KEY" with your actual, private Gemini API key.
+        const API_KEY = "AIzaSyCt5Oryv95bDRQb5kBeGBMTYEZGFuXEDGg"; 
+        const MODEL_NAME = "gemini-1.5-flash-latest";
+        const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL_NAME}:generateContent?key=${API_KEY}`;
+
+        function addMessage(text, sender) {
+            const messageRow = document.createElement('div');
+            messageRow.classList.add('message-row', sender);
+            const avatar = document.createElement('div');
+            avatar.classList.add('avatar', sender);
+            avatar.textContent = sender === 'ai' ? 'AI' : 'U';
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('message', sender);
+            messageElement.textContent = text;
+            messageRow.appendChild(avatar);
+            messageRow.appendChild(messageElement);
+            chatMessages.appendChild(messageRow);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        async function getAiResponse(userText) {
+            const thinkingRow = document.createElement('div');
+            thinkingRow.classList.add('message-row', 'ai');
+            thinkingRow.innerHTML = `<div class="avatar ai">AI</div><div class="message ai">Thinking...</div>`;
+            chatMessages.appendChild(thinkingRow);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ contents: [{ parts: [{ text: userText }] }] }),
+                });
+                if (!response.ok) throw new Error(`API request failed with status ${response.status}`);
+                const data = await response.json();
+                const aiText = data.candidates[0].content.parts[0].text;
+                chatMessages.removeChild(thinkingRow);
+                addMessage(aiText.trim(), 'ai');
+            } catch (error) {
+                console.error("Error fetching AI response:", error);
+                chatMessages.removeChild(thinkingRow);
+                addMessage("Sorry, an error occurred. Please ensure your API key is correct and valid.", 'ai');
+            }
+        }
+
+        function handleSend() {
+            const userText = userInput.value.trim();
+            if (userText === "") return;
+
+            // CORRECTED security check
+            if (!API_KEY || API_KEY === " ") {
+                addMessage("SECURITY WARNING: Please add your own valid API key in the script section of the HTML file.", 'ai');
+                return;
+            }
+
+            addMessage(userText, 'user');
+            userInput.value = "";
+            getAiResponse(userText);
+        }
+
+        sendButton.addEventListener('click', handleSend);
+        userInput.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') {
+                handleSend();
+            }
+        });
+
+        addMessage("Hello! I am K-gen, your AI assistant. How can I assist you today?", 'ai');
+    </script>
+</body>
+</html>

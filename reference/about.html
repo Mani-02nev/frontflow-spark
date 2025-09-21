@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>SIT Trichy - About</title>
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+     <style>
+          :root {
+               --primary-blue: #243c7e;
+               --secondary-blue: #2563EB;
+               --accent-yellow: #FACC15;
+               --bg-light: #F9FAFB;
+               --text-dark: #1f2937;
+          }
+
+          body {
+               padding-top: 0;
+               /* header is static, navbar is sticky so no extra padding needed */
+               background: linear-gradient(to right, #e3f2fd, #bbdefb);
+               font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+          }
+
+          /* Navbar same as home */
+          .navbar {
+               background: #cce5ff;
+               box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+               color: black;
+               position: sticky;
+               top: 0;
+               /* sticks to top when scrolling under header */
+               z-index: 1000;
+
+          }
+
+          .navbar-brand {
+               font-size: 1.5rem;
+               font-weight: bold;
+               color: rgb(0, 0, 0) !important;
+          }
+
+          .navbar-nav .nav-link {
+               color: rgb(0, 0, 0) !important;
+               font-weight: 500;
+               transition: all 0.3s ease;
+               border-radius: 8px;
+               padding: 8px 12px;
+          }
+
+          .navbar-nav .nav-link:hover {
+               background: #2563EB;
+               color: #ffffff !important;
+               transform: scale(1.05);
+               box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
+          }
+
+          .navbar-nav .nav-link.active {
+               background: #1e40af;
+               color: #fff !important;
+          }
+
+          .header {
+               background: linear-gradient(90deg, var(--primary-blue), var(--secondary-blue));
+               color: #fff;
+               padding: 15px;
+               display: flex;
+               align-items: center;
+               justify-content: space-between;
+          }
+
+          .header-title {
+               font-size: 22px;
+               font-weight: 600;
+               text-align: center;
+               flex: 1;
+          }
+
+          .img-logo {
+               width: 50px;
+               height: 50px;
+               border-radius: 10px;
+          }
+
+          /* Body */
+          body {
+               font-family: Arial, sans-serif;
+               margin: 0;
+               padding: 0;
+               background: #f9f9f9;
+               line-height: 1.6;
+          }
+
+          section {
+               padding: 120px 60px 60px;
+               max-width: 1100px;
+               margin: auto;
+          }
+
+          h2 {
+               color: #243c7e;
+               border-left: 4px solid #2d6fffcd;
+               padding-left: 10px;
+               margin-bottom: 20px;
+          }
+
+          p {
+               margin-bottom: 15px;
+          }
+
+          .card {
+               background: white;
+               padding: 20px;
+               border-radius: 12px;
+               box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+               margin-bottom: 30px;
+          }
+
+          /* Scroll box only for History */
+          .scroll-box {
+               max-height: 300px;
+               overflow-y: auto;
+               padding-right: 10px;
+          }
+
+          .scroll-box::-webkit-scrollbar {
+               width: 8px;
+          }
+
+          .scroll-box::-webkit-scrollbar-thumb {
+               background: #578dffda;
+               border-radius: 10px;
+          }
+
+          .scroll-box::-webkit-scrollbar-track {
+               background: #f1f1f1;
+          }
+
+          footer {
+               text-align: center;
+               padding: 15px;
+               background: #243c7e;
+               color: white;
+               margin-top: 50px;
+          }
+
+          .active {
+               background: #1e40af;
+               color: #fff !important;
+               border-radius: 12px;
+          }
+     </style>
+</head>
+
+<body>
+     <!-- Header -->
+     <header class="header">
+          <span><img class="img-logo" src="img/sit.jpeg" alt="SIT Logo"></span>
+          <span class="header-title">SESHASAYEE INSTITUTE OF TECHNOLOGY ,Trichy</span>
+          <span><img class="img-logo" src="img/FOUNDER.jpeg" alt="Founder"></span>
+     </header>
+     <!-- Navbar -->
+     <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+          <div class="container-fluid">
+               <a class="navbar-brand" href="index.html">SIT College</a>
+               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+               </button>
+               <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+                    <ul class="navbar-nav gap-3">
+                         <li class="nav-item">
+                              <a class="nav-link" href="index.html">Home</a>
+                         </li>
+                         <li class="nav-item">
+                              <a class="nav-link" href="dept.html">Departments</a>
+                         </li>
+                         <li class="nav-item">
+                              <a class="nav-link" href="admission.html">Admission</a>
+                         </li>
+                         <li class="nav-item">
+                              <a class="nav-link active" href="about.html">About</a>
+                         </li>
+                         <li class="nav-item">
+                              <a class="nav-link" href="contact.html">Contact</a>
+                         </li>
+                    </ul>
+               </div>
+          </div>
+     </nav>
+
+     <!-- About Content -->
+     <section>
+          <div class="card">
+               <h2>History of SIT</h2>
+               <div class="scroll-box">
+                    <p>
+                         Thiru V. Seshasayee was born in the year 1890 in the village of Valadi, a suburb of
+                         Thiruchirappalli. He came from a middle-class family of modest means.V. Seshasayee studied in
+                         St. Joseph’s High School until he matriculated from there. Impressed by the intelligence and
+                         technical acumen of Thiru V. Seshasayee, Mr. Winter, Chief Electrical and Signal Engineer of
+                         the South Indian Railway, recruited him as an apprentice, which gave Thiru V. Seshasayee an
+                         opportunity to learn many new things. In fact, he helped Mr. Winter to devise the ‘Block
+                         System’ which has been used by the Railways ever since. Thiru V. Seshasayee and Thiru R.
+                         Seshasayee, with a couple of friends, set up a small engineering workshop called “The
+                         Seshasayee Brothers Engineering Works” and repaired oil engines, automobiles, generator set
+                         installations, etc. They made a mark especially by rectifying and commissioning an electrical
+                         generator set, battery, and an ice-making plant in the palace of Raja Dinakar, followed by
+                         temple lighting at Rameshwaram, Madurai, and in the houses of rich Nagarathars of Devakottai,
+                         Karaikudi, and Kanadukathan. The firm also developed the first passenger vehicle with Mr.
+                         Carter of Addison & Company. A public limited company was formed under the name and style of
+                         ‘The Tiruchy Srirangam Electric Supply Corporation Limited’ and almost simultaneously a similar
+                         company in Devakottai by the name ‘Sri Meenakshi Sundareshwarar Electric Supply Corporation
+                         Limited’ to distribute D.C. They established the first A.C. supply system in the state in
+                         Devakottai in 1927 and Tiruchirappalli in 1928. By 1934, the Tiruchirappalli power station had
+                         become the biggest diesel power station then in South India, and a number of diesel power
+                         stations sprang up in various cities. Thiru V. Seshasayee saw the wisdom of hydro power schemes
+                         as the ultimate solution for the state’s rapidly increasing power needs and engaged in
+                         hydroelectric power generation utilizing the waters of Pykara in Nilgiris so that a statewide
+                         grid could be set up and hydro power distributed to all the cities rather than the costlier oil
+                         power. Thiru V. Seshasayee’s enterprise, vision, foresight, and continuous cooperation with the
+                         government were primarily responsible for the robust electricity supply system we have today.
+                         Thiru V. Seshasayee successfully commissioned a small caustic soda plant, the first of its type
+                         in India, at Mettur Dam known as Mettur Chemicals, for which the then Madras Government had
+                         offered special attractive power tariffs. Today, this factory is one of India’s leading
+                         producers of basic chemicals like caustic soda, bleaching powder, liquid chlorine, and other
+                         related products. Thiru V. Seshasayee assisted in commissioning a 50,000-ton sulphate plant in
+                         Travancore using electrolytic processes and also diversified the end products to urea and
+                         ammonium nitrate. Thiru V. Seshasayee actively promoted the exploitation of gypsum mining in
+                         Trichy district and assisted in establishing salt manufacture in Athirampathinam and
+                         Vedharanyam. He formed “Seshasayee Industries Limited” and established a 1200-ton high
+                         insulator factory with an associated forging shop and a foundry at Neyveli in South Arcot
+                         District, and around 5000 people were employed in these industries directly. As an outcome of
+                         his enterprise, the South Indian public, essentially interested in agriculture, grew
+                         industrial-minded and started lending support to entrepreneurs who followed in his way. South
+                         India has been fairly well drawn in the industrial map of India. Thiru V. Seshasayee was an
+                         active member of the co-operative movement. He formed a building co-operative society nearly 50
+                         years ago in Tiruchirappalli, which built houses worth over rupees 30 lakh for middle-class
+                         people. As its director since inception, and president from 1939 to 1958, he encouraged his
+                         staff to form small co-operatives for their various needs like provision shops, credit and loan
+                         societies, etc. Thiru V. Seshasayee was unostentatious, business-like, and friendly to all with
+                         a keen sense of justice and fair play. He looked to his responsibilities as a businessman very
+                         seriously without any compromise. He died on 19th October, 1958.
+
+                    </p>
+               </div>
+          </div>
+
+          <div class="card">
+               <h2>Our Mission</h2>
+               <p>To provide high-quality technical education, encourage research and innovation, and prepare students
+                    to become leaders in industry, academia, and entrepreneurship with strong ethical values.</p>
+          </div>
+
+          <div class="card">
+               <h2>Our Vision</h2>
+               <p>To be recognized as a world-class center of learning that empowers students with knowledge, skills,
+                    and values to address future challenges and contribute positively to society.</p>
+          </div>
+
+          <div class="card">
+               <h2>Infrastructure & Facilities</h2>
+               <p>Our campus is equipped with modern classrooms, advanced laboratories, digital libraries, hostels,
+                    sports
+                    facilities, and innovation centers that provide the best environment for students to grow
+                    academically and
+                    personally.</p>
+          </div>
+     </section>
+
+     <footer>
+          <p>&copy; 2025 SIT Trichy. All Rights Reserved.</p>
+     </footer>
+
+     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
