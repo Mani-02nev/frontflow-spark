@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tech Tools - SIT Trichy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <!-- Header (same as other pages) -->
+    <header class="header">
+        <div class="top-header">
+            <div class="container">
+                <div class="header-info">
+                    <div class="contact-info">
+                        <span><i class="fas fa-phone"></i> +91 431 2407334</span>
+                        <span><i class="fas fa-envelope"></i> info@sittrichy.in</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <nav class="navbar">
+            <div class="container">
+                <div class="nav-wrapper">
+                    <div class="logo-section">
+                        <div class="logo-icon"><i class="fas fa-graduation-cap"></i></div>
+                        <div class="logo-text">
+                            <h1>SIT</h1>
+                            <span>Est. 1998</span>
+                        </div>
+                    </div>
+                    <nav class="nav-links">
+                        <a href="index.html" class="nav-link">Home</a>
+                        <a href="about.html" class="nav-link">About</a>
+                        <a href="index.html#departments" class="nav-link">Departments</a>
+                        <a href="tech-tools.html" class="nav-link active">Tech Tools</a>
+                    </nav>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- AI Chat Demo -->
+        <section class="ai-chat-section">
+            <div class="container">
+                <div class="section-header">
+                    <h1 class="section-title">AI Assistant Demo</h1>
+                    <p class="section-subtitle">Try our intelligent chatbot for instant answers about SIT Trichy</p>
+                </div>
+                
+                <div class="chat-container">
+                    <div class="chat-header">
+                        <i class="fas fa-robot"></i>
+                        <span>K-gen AI Assistant</span>
+                    </div>
+                    <div class="chat-messages" id="chatMessages">
+                        <div class="message ai-message">
+                            <i class="fas fa-robot"></i>
+                            <div class="message-content">
+                                Hello! I'm K-gen Assistant. Ask me about admissions, departments, or campus life at SIT Trichy!
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chat-input">
+                        <input type="text" id="chatInput" placeholder="Ask me anything about SIT Trichy...">
+                        <button id="sendButton"><i class="fas fa-paper-plane"></i></button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tech Tools Grid -->
+        <section class="tech-tools-grid">
+            <div class="container">
+                <div class="tools-grid">
+                    <div class="tool-card">
+                        <div class="tool-icon purple-gradient"><i class="fas fa-brain"></i></div>
+                        <h3>AI Assistant</h3>
+                        <p>Smart chatbot for student queries and academic support</p>
+                        <button class="btn btn-tool">Try Now</button>
+                    </div>
+                    <div class="tool-card">
+                        <div class="tool-icon blue-gradient"><i class="fas fa-code"></i></div>
+                        <h3>Code Playground</h3>
+                        <p>Interactive coding environment with real-time collaboration</p>
+                        <button class="btn btn-tool">Launch</button>
+                    </div>
+                    <!-- More tool cards... -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Simple AI Chat Implementation
+        document.getElementById('sendButton').addEventListener('click', sendMessage);
+        document.getElementById('chatInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') sendMessage();
+        });
+
+        function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            if (!message) return;
+
+            addMessage(message, 'user');
+            input.value = '';
+            
+            setTimeout(() => {
+                const response = generateResponse(message);
+                addMessage(response, 'ai');
+            }, 1000);
+        }
+
+        function addMessage(text, type) {
+            const messagesContainer = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${type}-message`;
+            messageDiv.innerHTML = `
+                <i class="fas fa-${type === 'user' ? 'user' : 'robot'}"></i>
+                <div class="message-content">${text}</div>
+            `;
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function generateResponse(input) {
+            const responses = {
+                'admission': 'SIT offers admissions through JEE/TNEA. Visit our admissions page for details!',
+                'department': 'We have 6 engineering departments: CSE, Civil, Mechanical, EEE, ECE, and Automobile.',
+                'fee': 'Fee structure varies by program. Generally ₹80,000-₹1,20,000 per year with scholarships available.',
+                'placement': 'Excellent placement record with 85%+ rate. Top recruiters include TCS, Infosys, L&T.',
+                'default': 'Thanks for your question! For specific information, please contact our admissions office at +91 431 2407334.'
+            };
+            
+            const lowerInput = input.toLowerCase();
+            for (const [key, response] of Object.entries(responses)) {
+                if (lowerInput.includes(key)) return response;
+            }
+            return responses.default;
+        }
+    </script>
+
+    <style>
+        .ai-chat-section { padding: 5rem 0; }
+        .chat-container { 
+            max-width: 800px; 
+            margin: 0 auto; 
+            background: white; 
+            border-radius: 1rem; 
+            overflow: hidden; 
+            box-shadow: var(--shadow-xl);
+        }
+        .chat-header { 
+            background: var(--gradient-primary); 
+            color: white; 
+            padding: 1rem; 
+            text-align: center; 
+            font-weight: 600;
+        }
+        .chat-messages { 
+            height: 400px; 
+            overflow-y: auto; 
+            padding: 1rem; 
+            background: #f9fafb;
+        }
+        .message { 
+            display: flex; 
+            align-items: flex-start; 
+            gap: 0.75rem; 
+            margin-bottom: 1rem;
+        }
+        .user-message { flex-direction: row-reverse; }
+        .message-content { 
+            background: white; 
+            padding: 0.75rem 1rem; 
+            border-radius: 1rem; 
+            max-width: 70%;
+        }
+        .user-message .message-content { 
+            background: var(--primary); 
+            color: white; 
+        }
+        .chat-input { 
+            display: flex; 
+            padding: 1rem; 
+            border-top: 1px solid var(--border);
+        }
+        .chat-input input { 
+            flex: 1; 
+            padding: 0.75rem; 
+            border: 1px solid var(--border); 
+            border-radius: 2rem; 
+            margin-right: 0.5rem;
+        }
+        .chat-input button { 
+            background: var(--primary); 
+            color: white; 
+            border: none; 
+            border-radius: 50%; 
+            width: 3rem; 
+            height: 3rem; 
+            cursor: pointer;
+        }
+    </style>
+</body>
+</html>

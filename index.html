@@ -1,26 +1,660 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SIT Trichy - Seshasayee Institute of Technology</title>
-    <meta name="description" content="Seshasayee Institute of Technology - Premier engineering college in Trichy offering world-class technical education with modern technology tools and AI-powered learning platforms." />
-    <meta name="author" content="SIT Trichy" />
-    <meta name="keywords" content="engineering college, trichy, technology, AI tools, computer science, civil engineering, mechanical engineering, admissions" />
-    <link rel="canonical" href="https://lovable.dev" />
+    <meta name="description" content="Seshasayee Institute of Technology - Premier engineering college in Trichy offering world-class technical education with modern technology tools and AI-powered learning platforms.">
+    <meta name="keywords" content="engineering college, trichy, technology, AI tools, computer science, civil engineering, mechanical engineering, admissions">
+    <link rel="canonical" href="https://sittrichy.edu">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <!-- Loading Spinner -->
+    <div id="preloader">
+        <div class="spinner"></div>
+    </div>
 
-    <meta property="og:title" content="SIT Trichy - Seshasayee Institute of Technology" />
-    <meta property="og:description" content="Premier engineering college in Trichy with cutting-edge technology tools and excellent placement record. Apply now for admission." />
-    <meta property="og:type" content="website" />
-    <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+    <!-- Header -->
+    <header class="header">
+        <!-- Top Header Bar -->
+        <div class="top-header">
+            <div class="container">
+                <div class="header-info">
+                    <div class="contact-info">
+                        <span><i class="fas fa-phone"></i> +91 431 2407334</span>
+                        <span><i class="fas fa-envelope"></i> info@sittrichy.in</span>
+                    </div>
+                    <div class="header-title-text">
+                        <span>Seshasayee Institute of Technology</span>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@lovable_dev" />
-    <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
-  </head>
+        <!-- Main Header -->
+        <nav class="navbar">
+            <div class="container">
+                <div class="nav-wrapper">
+                    <!-- Logo -->
+                    <div class="logo-section">
+                        <div class="logo-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <div class="logo-text">
+                            <h1>SIT</h1>
+                            <span>Est. 1998</span>
+                        </div>
+                    </div>
 
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+                    <!-- Desktop Navigation -->
+                    <nav class="nav-links">
+                        <a href="index.html" class="nav-link active">Home</a>
+                        <a href="about.html" class="nav-link">About</a>
+                        <a href="#departments" class="nav-link">Departments</a>
+                        <a href="admissions.html" class="nav-link">Admissions</a>
+                        <a href="tech-tools.html" class="nav-link">Tech Tools</a>
+                        <a href="contact.html" class="nav-link">Contact</a>
+                    </nav>
+
+                    <!-- CTA Buttons -->
+                    <div class="cta-buttons">
+                        <button class="btn btn-outline">Contact Us</button>
+                        <button class="btn btn-college">Apply Now</button>
+                    </div>
+
+                    <!-- Mobile Menu Toggle -->
+                    <button class="mobile-toggle" id="mobileToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+
+                <!-- Mobile Navigation -->
+                <div class="mobile-nav" id="mobileNav">
+                    <nav class="mobile-nav-links">
+                        <a href="index.html" class="nav-link">Home</a>
+                        <a href="about.html" class="nav-link">About</a>
+                        <a href="#departments" class="nav-link">Departments</a>
+                        <a href="admissions.html" class="nav-link">Admissions</a>
+                        <a href="tech-tools.html" class="nav-link">Tech Tools</a>
+                        <a href="contact.html" class="nav-link">Contact</a>
+                    </nav>
+                    <div class="mobile-cta">
+                        <button class="btn btn-outline">Contact Us</button>
+                        <button class="btn btn-college">Apply Now</button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-background">
+                <img src="src/assets/hero-college.jpg" alt="SIT College Campus" class="hero-image">
+                <div class="hero-overlay"></div>
+            </div>
+            
+            <div class="container">
+                <div class="hero-content">
+                    <div class="hero-badge">
+                        🏆 Ranked Among Top Engineering Colleges
+                    </div>
+                    
+                    <h1 class="hero-title">
+                        Shaping Tomorrow's
+                        <span class="gradient-text">Tech Leaders</span>
+                    </h1>
+                    
+                    <p class="hero-subtitle">
+                        Seshasayee Institute of Technology - Where innovation meets education. 
+                        Join us in building the future with cutting-edge technology and excellence.
+                    </p>
+                    
+                    <div class="hero-buttons">
+                        <button class="btn btn-cta btn-xl">
+                            Apply for Admission
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                        <button class="btn btn-outline-white btn-xl">
+                            Explore Departments
+                        </button>
+                    </div>
+                    
+                    <div class="hero-stats">
+                        <div class="stat-item">
+                            <i class="fas fa-users"></i>
+                            <div class="stat-number">5000+</div>
+                            <div class="stat-label">Students</div>
+                        </div>
+                        <div class="stat-item">
+                            <i class="fas fa-award"></i>
+                            <div class="stat-number">25+</div>
+                            <div class="stat-label">Years Legacy</div>
+                        </div>
+                        <div class="stat-item">
+                            <i class="fas fa-book"></i>
+                            <div class="stat-number">8</div>
+                            <div class="stat-label">Departments</div>
+                        </div>
+                        <div class="stat-item">
+                            <i class="fas fa-microchip"></i>
+                            <div class="stat-number">100%</div>
+                            <div class="stat-label">Tech-Enabled</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="scroll-indicator">
+                <div class="scroll-dot"></div>
+            </div>
+        </section>
+
+        <!-- Departments Section -->
+        <section class="departments" id="departments">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-badge">
+                        <i class="fas fa-graduation-cap"></i>
+                        Academic Excellence
+                    </div>
+                    <h2 class="section-title">Our Departments</h2>
+                    <p class="section-subtitle">
+                        Discover world-class engineering programs designed to shape the future leaders 
+                        in technology and innovation.
+                    </p>
+                </div>
+
+                <div class="departments-grid">
+                    <div class="department-card" data-aos="fade-up">
+                        <div class="department-header">
+                            <div class="department-icon blue-gradient">
+                                <i class="fas fa-desktop"></i>
+                            </div>
+                            <div class="department-code">CSE</div>
+                        </div>
+                        <h3 class="department-name">Computer Science & Engineering</h3>
+                        <p class="department-desc">Cutting-edge computing education with AI, ML, and software development focus</p>
+                        
+                        <div class="department-stats">
+                            <div class="stat">
+                                <div class="stat-value">800+</div>
+                                <div class="stat-label">Students</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value">45</div>
+                                <div class="stat-label">Faculty</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value">12</div>
+                                <div class="stat-label">Labs</div>
+                            </div>
+                        </div>
+                        
+                        <div class="department-highlights">
+                            <span class="highlight-tag">AI & ML Lab</span>
+                            <span class="highlight-tag">Software Engineering</span>
+                        </div>
+                        
+                        <button class="btn btn-department">
+                            Explore Department
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+
+                    <div class="department-card" data-aos="fade-up" data-aos-delay="100">
+                        <div class="department-header">
+                            <div class="department-icon green-gradient">
+                                <i class="fas fa-building"></i>
+                            </div>
+                            <div class="department-code">CE</div>
+                        </div>
+                        <h3 class="department-name">Civil Engineering</h3>
+                        <p class="department-desc">Infrastructure development and sustainable construction technologies</p>
+                        
+                        <div class="department-stats">
+                            <div class="stat">
+                                <div class="stat-value">600+</div>
+                                <div class="stat-label">Students</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value">35</div>
+                                <div class="stat-label">Faculty</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value">8</div>
+                                <div class="stat-label">Labs</div>
+                            </div>
+                        </div>
+                        
+                        <div class="department-highlights">
+                            <span class="highlight-tag">Structural Engineering</span>
+                            <span class="highlight-tag">Smart Cities</span>
+                        </div>
+                        
+                        <button class="btn btn-department">
+                            Explore Department
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+
+                    <div class="department-card" data-aos="fade-up" data-aos-delay="200">
+                        <div class="department-header">
+                            <div class="department-icon orange-gradient">
+                                <i class="fas fa-cogs"></i>
+                            </div>
+                            <div class="department-code">ME</div>
+                        </div>
+                        <h3 class="department-name">Mechanical Engineering</h3>
+                        <p class="department-desc">Advanced manufacturing, robotics, and automation systems</p>
+                        
+                        <div class="department-stats">
+                            <div class="stat">
+                                <div class="stat-value">700+</div>
+                                <div class="stat-label">Students</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value">40</div>
+                                <div class="stat-label">Faculty</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value">10</div>
+                                <div class="stat-label">Labs</div>
+                            </div>
+                        </div>
+                        
+                        <div class="department-highlights">
+                            <span class="highlight-tag">Robotics Lab</span>
+                            <span class="highlight-tag">Automation</span>
+                        </div>
+                        
+                        <button class="btn btn-department">
+                            Explore Department
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+
+                    <div class="department-card" data-aos="fade-up" data-aos-delay="300">
+                        <div class="department-header">
+                            <div class="department-icon yellow-gradient">
+                                <i class="fas fa-bolt"></i>
+                            </div>
+                            <div class="department-code">EEE</div>
+                        </div>
+                        <h3 class="department-name">Electrical & Electronics</h3>
+                        <p class="department-desc">Power systems, renewable energy, and smart grid technologies</p>
+                        
+                        <div class="department-stats">
+                            <div class="stat">
+                                <div class="stat-value">550+</div>
+                                <div class="stat-label">Students</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value">32</div>
+                                <div class="stat-label">Faculty</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value">9</div>
+                                <div class="stat-label">Labs</div>
+                            </div>
+                        </div>
+                        
+                        <div class="department-highlights">
+                            <span class="highlight-tag">Power Systems</span>
+                            <span class="highlight-tag">Smart Grids</span>
+                        </div>
+                        
+                        <button class="btn btn-department">
+                            Explore Department
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+
+                    <div class="department-card" data-aos="fade-up" data-aos-delay="400">
+                        <div class="department-header">
+                            <div class="department-icon purple-gradient">
+                                <i class="fas fa-microchip"></i>
+                            </div>
+                            <div class="department-code">ECE</div>
+                        </div>
+                        <h3 class="department-name">Electronics & Communication</h3>
+                        <p class="department-desc">Communication systems, IoT, and embedded system design</p>
+                        
+                        <div class="department-stats">
+                            <div class="stat">
+                                <div class="stat-value">650+</div>
+                                <div class="stat-label">Students</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value">38</div>
+                                <div class="stat-label">Faculty</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value">11</div>
+                                <div class="stat-label">Labs</div>
+                            </div>
+                        </div>
+                        
+                        <div class="department-highlights">
+                            <span class="highlight-tag">IoT Lab</span>
+                            <span class="highlight-tag">VLSI Design</span>
+                        </div>
+                        
+                        <button class="btn btn-department">
+                            Explore Department
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+
+                    <div class="department-card" data-aos="fade-up" data-aos-delay="500">
+                        <div class="department-header">
+                            <div class="department-icon indigo-gradient">
+                                <i class="fas fa-car"></i>
+                            </div>
+                            <div class="department-code">AE</div>
+                        </div>
+                        <h3 class="department-name">Automobile Engineering</h3>
+                        <p class="department-desc">Next-generation automotive technologies and electric vehicles</p>
+                        
+                        <div class="department-stats">
+                            <div class="stat">
+                                <div class="stat-value">400+</div>
+                                <div class="stat-label">Students</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value">25</div>
+                                <div class="stat-label">Faculty</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value">6</div>
+                                <div class="stat-label">Labs</div>
+                            </div>
+                        </div>
+                        
+                        <div class="department-highlights">
+                            <span class="highlight-tag">EV Technology</span>
+                            <span class="highlight-tag">Design Studio</span>
+                        </div>
+                        
+                        <button class="btn btn-department">
+                            Explore Department
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="departments-cta">
+                    <div class="cta-card">
+                        <h3>Ready to Start Your Engineering Journey?</h3>
+                        <p>Join thousands of students who have transformed their careers with our world-class engineering programs and cutting-edge facilities.</p>
+                        <div class="cta-buttons">
+                            <button class="btn btn-cta btn-lg">
+                                Apply for Admission
+                                <i class="fas fa-arrow-right"></i>
+                            </button>
+                            <button class="btn btn-outline-white btn-lg">
+                                Download Brochure
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tech Tools Section -->
+        <section class="tech-tools">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-badge">
+                        <i class="fas fa-bolt"></i>
+                        Latest Technology
+                    </div>
+                    <h2 class="section-title">Modern Tech Tools</h2>
+                    <p class="section-subtitle">
+                        Experience cutting-edge technology tools designed to enhance learning, 
+                        collaboration, and innovation in education.
+                    </p>
+                </div>
+
+                <div class="tools-grid">
+                    <div class="tool-card" data-aos="fade-up">
+                        <div class="tool-header">
+                            <div class="tool-icon purple-gradient">
+                                <i class="fas fa-brain"></i>
+                            </div>
+                            <div class="tool-category">Artificial Intelligence</div>
+                        </div>
+                        <h3 class="tool-title">AI Assistant</h3>
+                        <p class="tool-desc">Smart chatbot for student queries and academic support</p>
+                        <div class="tool-features">
+                            <div class="feature">• 24/7 Support</div>
+                            <div class="feature">• Multi-language</div>
+                            <div class="feature">• Smart Responses</div>
+                        </div>
+                        <button class="btn btn-tool">
+                            Explore Tool
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+
+                    <div class="tool-card" data-aos="fade-up" data-aos-delay="100">
+                        <div class="tool-header">
+                            <div class="tool-icon blue-gradient">
+                                <i class="fas fa-code"></i>
+                            </div>
+                            <div class="tool-category">Development</div>
+                        </div>
+                        <h3 class="tool-title">Code Playground</h3>
+                        <p class="tool-desc">Interactive coding environment with real-time collaboration</p>
+                        <div class="tool-features">
+                            <div class="feature">• Live Coding</div>
+                            <div class="feature">• Multiple Languages</div>
+                            <div class="feature">• Code Sharing</div>
+                        </div>
+                        <button class="btn btn-tool">
+                            Explore Tool
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+
+                    <div class="tool-card" data-aos="fade-up" data-aos-delay="200">
+                        <div class="tool-header">
+                            <div class="tool-icon green-gradient">
+                                <i class="fas fa-desktop"></i>
+                            </div>
+                            <div class="tool-category">Education</div>
+                        </div>
+                        <h3 class="tool-title">Virtual Labs</h3>
+                        <p class="tool-desc">Immersive virtual laboratory experiences for practical learning</p>
+                        <div class="tool-features">
+                            <div class="feature">• 3D Simulations</div>
+                            <div class="feature">• Remote Access</div>
+                            <div class="feature">• Real Experiments</div>
+                        </div>
+                        <button class="btn btn-tool">
+                            Explore Tool
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+
+                    <div class="tool-card" data-aos="fade-up" data-aos-delay="300">
+                        <div class="tool-header">
+                            <div class="tool-icon orange-gradient">
+                                <i class="fas fa-database"></i>
+                            </div>
+                            <div class="tool-category">Management</div>
+                        </div>
+                        <h3 class="tool-title">Student Portal</h3>
+                        <p class="tool-desc">Comprehensive student management and academic tracking system</p>
+                        <div class="tool-features">
+                            <div class="feature">• Grade Tracking</div>
+                            <div class="feature">• Attendance</div>
+                            <div class="feature">• Resources</div>
+                        </div>
+                        <button class="btn btn-tool">
+                            Explore Tool
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+
+                    <div class="tool-card" data-aos="fade-up" data-aos-delay="400">
+                        <div class="tool-header">
+                            <div class="tool-icon indigo-gradient">
+                                <i class="fas fa-mobile-alt"></i>
+                            </div>
+                            <div class="tool-category">Mobile</div>
+                        </div>
+                        <h3 class="tool-title">Mobile App</h3>
+                        <p class="tool-desc">Native mobile application for campus life and academics</p>
+                        <div class="tool-features">
+                            <div class="feature">• Push Notifications</div>
+                            <div class="feature">• Offline Mode</div>
+                            <div class="feature">• Campus Map</div>
+                        </div>
+                        <button class="btn btn-tool">
+                            Explore Tool
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+
+                    <div class="tool-card" data-aos="fade-up" data-aos-delay="500">
+                        <div class="tool-header">
+                            <div class="tool-icon pink-gradient">
+                                <i class="fas fa-palette"></i>
+                            </div>
+                            <div class="tool-category">Creative</div>
+                        </div>
+                        <h3 class="tool-title">Design Studio</h3>
+                        <p class="tool-desc">Creative tools for design and multimedia projects</p>
+                        <div class="tool-features">
+                            <div class="feature">• Vector Graphics</div>
+                            <div class="feature">• 3D Modeling</div>
+                            <div class="feature">• Animation</div>
+                        </div>
+                        <button class="btn btn-tool">
+                            Explore Tool
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="featured-platform">
+                    <div class="platform-content">
+                        <div class="platform-text">
+                            <div class="platform-badge">🚀 Featured Tool</div>
+                            <h3>Integrated Learning Platform</h3>
+                            <p>Our comprehensive platform combines all these tools into one seamless experience, making learning more engaging and effective than ever before.</p>
+                            <div class="platform-buttons">
+                                <button class="btn btn-cta btn-lg">
+                                    Get Started
+                                    <i class="fas fa-arrow-right"></i>
+                                </button>
+                                <button class="btn btn-outline-white btn-lg">
+                                    Watch Demo
+                                </button>
+                            </div>
+                        </div>
+                        <div class="platform-image">
+                            <img src="src/assets/tech-tools.jpg" alt="Technology Tools" class="platform-img">
+                            <div class="play-button">
+                                <i class="fas fa-play"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <div class="footer-logo-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <div class="footer-logo-text">
+                            <h4>SIT Trichy</h4>
+                            <span>Est. 1998</span>
+                        </div>
+                    </div>
+                    <p class="footer-desc">
+                        Seshasayee Institute of Technology is a premier engineering institution 
+                        committed to excellence in technical education and research.
+                    </p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-section">
+                    <h4 class="footer-title">Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="#departments">Departments</a></li>
+                        <li><a href="admissions.html">Admissions</a></li>
+                        <li><a href="placements.html">Placements</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4 class="footer-title">Academics</h4>
+                    <ul class="footer-links">
+                        <li><a href="departments/cse.html">Computer Science</a></li>
+                        <li><a href="departments/civil.html">Civil Engineering</a></li>
+                        <li><a href="departments/mech.html">Mechanical</a></li>
+                        <li><a href="departments/ece.html">Electronics</a></li>
+                        <li><a href="tech-tools.html">Tech Tools</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4 class="footer-title">Contact Info</h4>
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Seshasayee Institute of Technology, Trichy - 620 012</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-phone"></i>
+                            <span>+91 431 2407334</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>info@sittrichy.in</span>
+                        </div>
+                    </div>
+                    <button class="btn btn-cta btn-sm footer-btn">
+                        Visit Campus
+                        <i class="fas fa-external-link-alt"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2024 Seshasayee Institute of Technology. All rights reserved. | Developed with modern technology tools</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="assets/js/main.js"></script>
+</body>
 </html>
